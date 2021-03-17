@@ -1,15 +1,54 @@
 {
-  "startTime": "2021-03-16T19:01:09.841Z",
-  "endTime": "2021-03-16T19:02:53.653Z",
+  "startTime": "2021-03-17T03:26:16.308Z",
+  "endTime": "2021-03-17T03:31:20.373Z",
   "userAgents": [
     "Chrome 89.0.4389.82 / Windows 10",
     "Firefox 85.0 / Windows 10",
     "Microsoft Edge 89.0.774.54 / Windows 10"
   ],
-  "passed": 10,
-  "total": 10,
+  "passed": 14,
+  "total": 14,
   "skipped": 0,
   "fixtures": [
+    {
+      "name": "Login feature: test with Roles ",
+      "path": "C:\\Users\\evelyne.franco\\OneDrive - Unosquare\\Documents\\wizeline\\git1\\QACertification\\assesstment1-testcasfe\\page_model\\test\\Authentication.test.js",
+      "meta": {},
+      "tests": [
+        {
+          "name": "Test role standar user",
+          "meta": {},
+          "errs": [],
+          "durationMs": 16134,
+          "screenshotPath": null,
+          "skipped": false
+        },
+        {
+          "name": "Test role locked user",
+          "meta": {},
+          "errs": [],
+          "durationMs": 6226,
+          "screenshotPath": null,
+          "skipped": false
+        },
+        {
+          "name": "Test role problem user",
+          "meta": {},
+          "errs": [],
+          "durationMs": 6020,
+          "screenshotPath": null,
+          "skipped": false
+        },
+        {
+          "name": "Test role performance user ",
+          "meta": {},
+          "errs": [],
+          "durationMs": 17979,
+          "screenshotPath": null,
+          "skipped": false
+        }
+      ]
+    },
     {
       "name": "login feature test",
       "path": "C:\\Users\\evelyne.franco\\OneDrive - Unosquare\\Documents\\wizeline\\git1\\QACertification\\assesstment1-testcasfe\\page_model\\test\\Login.test.js",
@@ -19,7 +58,7 @@
           "name": "1. Validate user navigates to the products page",
           "meta": {},
           "errs": [],
-          "durationMs": 7838,
+          "durationMs": 4977,
           "screenshotPath": null,
           "skipped": false
         },
@@ -27,7 +66,7 @@
           "name": "2. Validate error message is displayed",
           "meta": {},
           "errs": [],
-          "durationMs": 4789,
+          "durationMs": 4734,
           "screenshotPath": null,
           "skipped": false
         },
@@ -35,7 +74,7 @@
           "name": "3. Validate user navigates to the login page",
           "meta": {},
           "errs": [],
-          "durationMs": 6817,
+          "durationMs": 6045,
           "screenshotPath": null,
           "skipped": false
         }
@@ -50,7 +89,7 @@
           "name": "4. Validates User can navigates to the shopping cart page",
           "meta": {},
           "errs": [],
-          "durationMs": 5737,
+          "durationMs": 6155,
           "screenshotPath": null,
           "skipped": false
         },
@@ -58,7 +97,7 @@
           "name": "5. Validate User can add a single item",
           "meta": {},
           "errs": [],
-          "durationMs": 6991,
+          "durationMs": 8433,
           "screenshotPath": null,
           "skipped": false
         },
@@ -66,7 +105,7 @@
           "name": "6. Validate User can add multiple items",
           "meta": {},
           "errs": [],
-          "durationMs": 28074,
+          "durationMs": 24262,
           "screenshotPath": null,
           "skipped": false
         },
@@ -74,7 +113,7 @@
           "name": "7. Validate error message is displayed in the users information page",
           "meta": {},
           "errs": [],
-          "durationMs": 27116,
+          "durationMs": 24960,
           "screenshotPath": null,
           "skipped": false
         },
@@ -82,7 +121,7 @@
           "name": "8. Validate user navigates to the overview page once the his data has been filled",
           "meta": {},
           "errs": [],
-          "durationMs": 8872,
+          "durationMs": 10808,
           "screenshotPath": null,
           "skipped": false
         },
@@ -90,7 +129,7 @@
           "name": "9. Validate items in the overview page match with the added items",
           "meta": {},
           "errs": [],
-          "durationMs": 29268,
+          "durationMs": 16550,
           "screenshotPath": null,
           "skipped": false
         },
@@ -98,7 +137,7 @@
           "name": "10. Validate the user navigates to the confirmation page",
           "meta": {},
           "errs": [],
-          "durationMs": 33079,
+          "durationMs": 196707,
           "screenshotPath": null,
           "skipped": false
         }
