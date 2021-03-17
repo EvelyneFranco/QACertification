@@ -1,17 +1,22 @@
-import LoginPage from '../pages/LoginPage'
+
 import ProductsPage from  '../pages/ProductsPage'
-import { CREDENTIALS , INFORMATION } from '../data/Constants'
+import {  INFORMATION } from '../data/Constants'
 import CartPage from '../pages/CartPage'
 import  CheckoutInformationPage from '../pages/CheckoutInformationPage'
 import OverviewPage from '../pages/OverviewPage'
 import FinishPage from '../pages/FinishPage'
+import {standard_user} from '../roles/roles'
      
 
 //test suite name
 fixture ('Navigation test')
-    .page `https://www.saucedemo.com/`
+    /*.page `https://www.saucedemo.com/`
     .beforeEach(async t=>{
         await LoginPage.submitLogin(CREDENTIALS.VALID_USER.USERNAME, CREDENTIALS.VALID_USER.PASSWORD) 
+    })*/
+    .beforeEach(async t=>{
+        await t
+            .useRole(standard_user)
     })
     test('4. Validates User can navigates to the shopping cart page', async t=>{
         await t.click(ProductsPage.carButton)

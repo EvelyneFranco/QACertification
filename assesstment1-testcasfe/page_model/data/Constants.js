@@ -6,6 +6,18 @@ export const CREDENTIALS = {
         USERNAME: process.env.USERNAME1,
         PASSWORD : process.env.PASSWORD
     },
+    LOCKED_USER:{
+        USERNAME2: process.env.USERNAME2,
+        PASSWORD : process.env.PASSWORD
+    },
+    PROBLEM_USER:{
+        USERNAME: process.env.USERNAME3,
+        PASSWORD : process.env.PASSWORD
+    },
+    PERFORMANCE_USER:{
+        USERNAME: process.env.USERNAME4,
+        PASSWORD : process.env.PASSWORD
+    },
 
     INVALID_USER:{
         USERNAME: 'INVALID',
