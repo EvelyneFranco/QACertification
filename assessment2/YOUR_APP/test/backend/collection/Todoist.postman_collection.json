@@ -1,0 +1,718 @@
+{
+	"info": {
+		"_postman_id": "0125b266-51c1-4030-82c7-8422f301dddc",
+		"name": "Todoist",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Task",
+			"item": [
+				{
+					"name": "GetActiveTask",
+					"item": [
+						{
+							"name": "GetActiveTask",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"STATUS code is 2xx\", function () {\r",
+											"    pm.response.to.be.success;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Validate id value\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData[0].id).to.eql(4667943883);\r",
+											"});\r",
+											"//--------------------------------------------------------\r",
+											"const schema = {\r",
+											"    \"type\": \"object\"\r",
+											"};\r",
+											"\r",
+											"pm.test(\"Validate JSON schema\", () => {\r",
+											"    pm.request.to.have.jsonSchema(schema);\r",
+											"    \r",
+											"});\r",
+											"//--------------------------------------------------------\r",
+											"pm.test(\"NEGATIVE: Response should not be error\", function(){\r",
+											"    pm.response.to.not.be.error;\r",
+											"    \r",
+											"});\r",
+											"//--------------------------------------------------------\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Negative_InvalidHeader_GetActiveTask",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"const schema = {\r",
+											"    \"type\": \"object\"\r",
+											"};\r",
+											"\r",
+											"pm.test(\"Validate JSON schema\", () => {\r",
+											"    pm.request.to.have.jsonSchema(schema);\r",
+											"    \r",
+											"});\r",
+											"//--------------------------------------------------------\r",
+											"pm.test(\"NEGATIVE: Response should not be error\", function(){\r",
+											"    pm.response.to.be.error;\r",
+											"    \r",
+											"});\r",
+											"//--------------------------------------------------------\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"host": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CreateNewTask",
+					"item": [
+						{
+							"name": "CreateTask",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"STATUS code is 2xx\", function () {\r",
+											"    pm.response.to.be.success;\r",
+											"});\r",
+											"\r",
+											"var jsonData= pm.response.json()\r",
+											"pm.environment.set(\"taskID\", jsonData.id); \r",
+											"\r",
+											"pm.test(\"Validate id value\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.id).to.exist;\r",
+											"});\r",
+											"//--------------------------------------------------------\r",
+											"const schema = {\r",
+											"    \"type\": \"object\"\r",
+											"};\r",
+											"\r",
+											"pm.test(\"Validate JSON schema\", () => {\r",
+											"    pm.response.to.have.jsonSchema(schema);\r",
+											"    \r",
+											"});\r",
+											"//--------------------------------------------------------\r",
+											"pm.test(\"Validate  value\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.content).to.eql(\"Evelyne task\");\r",
+											"\r",
+											"})\r",
+											"//--------------------------------------------------------\r",
+											"pm.test(\"NEGATIVE: request should not be empty\", function(){\r",
+											"    pm.request.to.not.be.empty;\r",
+											"    \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-Id",
+										"value": "$(uuidgen)",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"content\": \"{{content}}\", \r\n    \"due_string\": \"2016-09-01\",\r\n     \"due_lang\": \"en\", \r\n     \"priority\": 4,\r\n     \"completed\": false\r\n}\r\n"
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Negative_InvalidRequest_CreateTask",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"STATUS code is 4xx\", function () {\r",
+											"    pm.response.to.be.error;\r",
+											"});\r",
+											"\r",
+											"//--------------------------------------------------------\r",
+											"\r",
+											"\r",
+											"\r",
+											"//--------------------------------------------------------\r",
+											"pm.test(\"NEGATIVE: request should not be empty\", function(){\r",
+											"    pm.request.to.not.be.empty;\r",
+											"    \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-Id",
+										"value": "$(uuidgen)",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GetActiveTask",
+					"item": [
+						{
+							"name": "GetTaskByID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"STATUS code is 2xx\", function () {\r",
+											"    pm.response.to.be.success;\r",
+											"});\r",
+											"//------------------------------------------------------\r",
+											"var taskid=pm.environment.get(\"taskID\");\r",
+											"pm.test(\"Validate id value\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.id).to.eql(taskid);\r",
+											"});\r",
+											"//--------------------------------------------------------\r",
+											"\r",
+											"const schema = {\r",
+											"    \"type\": \"object\"\r",
+											"};\r",
+											"\r",
+											"pm.test(\"Validate JSON schema\", () => {\r",
+											"    pm.response.to.have.jsonSchema(schema);\r",
+											"    \r",
+											"});\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"\r",
+											"//--------------------------------------------------------\r",
+											"pm.test(\"NEGATIVE: Response should not be error\", function(){\r",
+											"    pm.response.to.not.be.error;\r",
+											"    \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/{{taskID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UpdateTask",
+					"item": [
+						{
+							"name": "UpdateTask",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.be.success\r",
+											"});\r",
+											"//---------------------------------------------------\r",
+											"const schema = {\r",
+											"    \"type\": \"object\"\r",
+											"};\r",
+											"\r",
+											"pm.test(\"Validate JSON schema\", () => {\r",
+											"    pm.request.to.have.jsonSchema(schema);\r",
+											"    \r",
+											"});\r",
+											"//--------------------------------------------------------\r",
+											"pm.test(\"Negative empty response: validate not property is present\", () =>{\r",
+											"     pm.response.to.not.have.property('status', 'OK');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Requested-Id",
+										"value": "$(uuidgen)",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"content\": \"Evelyne updated task\"\r\n}"
+								},
+								"url": {
+									"raw": "{{url}}/{{taskID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Negative_InvalidRequest_UpdateTask",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 4xx\", function () {\r",
+											"    pm.response.to.be.error;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Requested-Id",
+										"value": "$(uuidgen)",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/{{taskID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ChangeStatusTask",
+					"item": [
+						{
+							"name": "CloseTask",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 2xx\", function () {\r",
+											"    pm.response.to.be.success;\r",
+											"});\r",
+											"//-----------------------------------------------\r",
+											"const schema = {\r",
+											"    \"type\": \"object\"\r",
+											"};\r",
+											"\r",
+											"pm.test(\"Validate JSON schema\", () => {\r",
+											"    pm.request.to.have.jsonSchema(schema);\r",
+											"    \r",
+											"});\r",
+											"//-----------------------------------------------\r",
+											"\r",
+											"pm.test(\"Negative empty response: validate not property is present\", () =>{\r",
+											"     pm.response.to.not.have.property('status', 'OK');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/{{taskID}}/close",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{taskID}}",
+										"close"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Negative_InvalidHeader_CloseTask",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response will fail\", function () {\r",
+											"    pm.response.to.be.error\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"host": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/{{taskID}}/close",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{taskID}}",
+										"close"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ReopenTask",
+					"item": [
+						{
+							"name": "ReopenTask",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 2xx\", function () {\r",
+											"    pm.response.to.be.success\r",
+											"});\r",
+											"\r",
+											"const schema = {\r",
+											"    \"type\": \"object\"\r",
+											"};\r",
+											"\r",
+											"pm.test(\"Validate JSON schema\", () => {\r",
+											"    pm.request.to.have.jsonSchema(schema);\r",
+											"    \r",
+											"});\r",
+											"\r",
+											"pm.test(\"Negative_empty_response: validate not property is present\", () =>{\r",
+											"     pm.response.to.not.have.property('status', 'OK');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/{{taskID}}/reopen",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{taskID}}",
+										"reopen"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Negative_InvalidHeader_ReopenTask",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 4xx\", function () {\r",
+											"    pm.response.to.be.error\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"host": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/{{taskID}}/reopen",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{taskID}}",
+										"reopen"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DeleteTask",
+					"item": [
+						{
+							"name": "Deletetask",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const schema = {\r",
+											"    \"type\": \"object\"\r",
+											"};\r",
+											"\r",
+											"pm.test(\"Validate JSON schema\", () => {\r",
+											"    pm.request.to.have.jsonSchema(schema);\r",
+											"    \r",
+											"});\r",
+											"pm.test(\"Negative_empty_response: validate not property is present\", () =>{\r",
+											"     pm.response.to.not.have.property('status', 'OK');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/{{taskID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Negative_InvalidHeader_DeleteTask",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Negative_empty_response: validate not property is present\", () =>{\r",
+											"     pm.response.to.not.have.property('status', 'OK');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 4xx\", function () {\r",
+											"    pm.response.to.be.error\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"host": true
+								}
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/{{taskID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{taskID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"pm.test(\"Response time is less than 200ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(1400);",
+					"});"
+				]
+			}
+		}
+	]
+}

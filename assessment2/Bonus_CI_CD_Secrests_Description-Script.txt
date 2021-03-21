@@ -1,0 +1,43 @@
+#In order to crate the CI/CD I will use gitlab scrit, example, I have used also bamboo, but the most common is git.
+#the .gitlab-ci.yml will looks like this:  
+
+stages:
+	- test
+	
+postman_test:
+	stage: test	
+	image:
+		name: postman/ImageName 
+		entrypoint: [""]
+	
+	script:
+		-newman --version
+		-npm install -g newman-reporter-html
+		-newman run Todoist.postman_collection.json -e QA.postman_environment.json --reporters cli,html --reporter-html-export report.html
+	artifacts:
+		paths:
+			-report.html
+			
+
+
+# Since the key should not be public,  the solution for this is "secrets". There are some tools that are used for secrests like vault, heroku, Docker.
+# in git we can add mask variable: gitlab Settings>CI/CD->Variables->Add Variable .. in this screen  make sure to mask the variable
+
+#in git script will be something similar to:
+script:
+    - curl --request POST --data "secret_variable=$SECRET_VARIABLE"
+	
+#in vault will be something similar to the following script:
+job:
+  secrets:
+    Application_key:
+      vault: enviroment/apykey/key@ops 
+
+
+#in heroku will be a script similar to:
+uses: name/heroku-deploy@v3.12.12 
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+		  
+#in gitlab with docker can be something similar to:
+ API_KEY: {{GITLAB_SECRETS_API_KEY}}
