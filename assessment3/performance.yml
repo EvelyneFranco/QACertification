@@ -1,0 +1,54 @@
+config:
+  target: "https://api.todoist.com"
+  phases:
+    - duration: 1  
+      arrivalRate: 6
+      name: "Phase 1"
+    - duration: 1  
+      arrivalRate: 5
+      name: "Phase 2"
+  plugins:
+    faker:
+      locale: en
+      
+  variables:
+    contFaker: 
+      - "$faker.random.word"
+  
+  #processor: "./Data.js"
+
+  defaults:
+   headers:
+     Authorization: Bearer {{ $processEnvironment.TOKEN }}
+     Content-type: application/json
+     X-Requested-Id: $(uuidgen)
+  #processor: "./Data.js"
+scenarios:
+   - flow:
+       - get:
+           url: "/rest/v1/tasks"
+       - post:
+           url: "/rest/v1/tasks"
+           json:
+            content: "{{ contFaker }}"
+            due_string: "2016-09-01"
+            due_lang: "en"
+            priority: 4
+            completed: false
+           capture:
+            json: "$.id"
+            as: "id"
+       - get:
+           url: "/rest/v1/tasks/{{ id }}"
+       - post:
+           url: "/rest/v1/tasks/{{ id }}"
+           json:
+            content: "task updated"
+       - post:
+           url: "/rest/v1/tasks/{{ id }}/close"
+       - post:
+           url: "/rest/v1/tasks/{{ id }}/reopen"
+       - delete:
+           url: "/rest/v1/tasks/{{ id }}"
+  # For more information: https://artillery.io/docs/script-reference/
+# For more information: https://artillery.io/docs/script-reference/
